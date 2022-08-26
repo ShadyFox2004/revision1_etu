@@ -92,11 +92,11 @@ public class Garage {
 
         int indexStationement = chercheVehiculeStationnement(vehiculeRepare);
 
-        if (indexStationement != -1) {
-            indexStationement = indexStationement - 1;
+        if (indexStationement != -1 && garages[indexGarage] == null) {
+            garages[indexGarage] = stationnements[indexStationement];
+            stationnements[indexStationement] = null; // libere le stationnement
 
-
-
+            estEntre = true; 
         }
 
         return estEntre;
