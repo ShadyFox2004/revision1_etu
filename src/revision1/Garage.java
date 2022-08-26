@@ -120,7 +120,8 @@ public class Garage {
 
         assert vehiculeRepare != null : "parametre null";
 
-        for (int indexStationnement = 0; indexStationnement < stationnements.length && indexPlaceStationnement == -1; indexStationnement++) {
+        for (int indexStationnement = 0; indexStationnement < stationnements.length &&
+            indexPlaceStationnement == -1; indexStationnement++) {
             if(vehiculeRepare.equals(stationnements[indexStationnement])) {
                 indexPlaceStationnement = indexStationnement;
             }
@@ -142,10 +143,13 @@ public class Garage {
 
         boolean estSortie = false;
 
+        assert placeGarage > 0 : "place negative";
+        assert placeStationement > 0 : "place negative";
+
         int indexStationement = placeStationement-1;
         int indexGarage = placeGarage -1;
 
-        if(indexStationement > -1 && indexStationement > -1 && stationnements[indexStationement] == null && garages[indexGarage] != null) {
+        if(stationnements[indexStationement] == null && garages[indexGarage] != null) {
             stationnements[indexStationement] = garages[indexGarage]; // deplace dans le stationnement
             
             garages[indexGarage] = null; // libere le garage; 
