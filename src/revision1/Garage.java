@@ -120,8 +120,7 @@ public class Garage {
 
         assert vehiculeRepare != null : "parametre null";
 
-        for (int indexStationnement = 0; indexStationnement < stationnements.length &&
-            indexPlaceStationnement == -1; indexStationnement++) {
+        for (int indexStationnement = 0; indexStationnement < stationnements.length && indexPlaceStationnement == -1; indexStationnement++) {
             if(vehiculeRepare.equals(stationnements[indexStationnement])) {
                 indexPlaceStationnement = indexStationnement;
             }
