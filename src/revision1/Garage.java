@@ -1,7 +1,4 @@
 package revision1;
-
-import java.util.Iterator;
-
 public class Garage {
     private Automobile[] stationnements;
     private Automobile[] garages;
@@ -27,8 +24,16 @@ public class Garage {
      * @return faux s'il n'y a plus de palce
      */
     public boolean stationne(Automobile auto) {
+        boolean estStationne = false;
 
-        return false;
+        int indexPlaceLibre = trouveIndexPlaceLibre();
+
+        if(indexPlaceLibre != -1) {
+            stationnements[indexPlaceLibre] = auto;
+            estStationne = true;
+        }
+
+        return estStationne;
     }
 
     /**
@@ -37,14 +42,7 @@ public class Garage {
      * @return vrai s'il est plein
      */
     private boolean stationnementEstPlein() {
-        boolean estPlein = true;
-
-        for (int i = 0; i < stationnements.length && estPlein; i++) {
-            if (stationnements[i] == null)
-                estPlein = false;
-        }
-
-        return estPlein;
+        return trouveIndexPlaceLibre() == -1;
     }
 
     /**
@@ -164,7 +162,16 @@ public class Garage {
      * @return le vehicule qui doit être retiré sii il est trouvé null autrement.
      */
     public Automobile faitDepartVehicule(Automobile auto) {
-        return null;
+        Automobile vehiculeParti = null;
+        
+        int indexStationement = chercheVehiculeStationnement(auto);
+
+        if(indexStationement != -1) {
+            vehiculeParti = stationnements[indexStationement];
+            stationnements[indexStationement] = null;
+        }
+
+        return vehiculeParti;
     }
 
     /**
