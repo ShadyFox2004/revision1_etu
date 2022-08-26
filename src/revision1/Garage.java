@@ -55,13 +55,13 @@ public class Garage {
     private int trouveIndexPlaceLibre() {
         int indexPlaceLibre = -1;
 
-        for (int indexStationnement = 0; indexStationnement < garages.length && indexPlaceLibre == -1; indexStationnement++) {
+        for (int indexStationnement = 0; indexStationnement < stationnements.length && indexPlaceLibre == -1; indexStationnement++) {
             if(stationnements[indexStationnement] == null) {
                 indexPlaceLibre = indexStationnement;
             } 
         }
 
-        return -1;
+        return indexPlaceLibre;
     }
 
     /**
@@ -116,15 +116,17 @@ public class Garage {
      */
     private int chercheVehiculeStationnement(Automobile vehiculeRepare) {
 
-        int placeStationnement = -1;
+        int indexPlaceStationnement = -1;
 
         assert vehiculeRepare != null : "parametre null";
 
-        for (int indexStationnement = 0; indexStationnement < stationnements.length && placeStationnement == -1; indexStationnement++) {
-            placeStationnement = stationnements[indexStationnement].equals(vehiculeRepare) ? indexStationnement: -1;
+        for (int indexStationnement = 0; indexStationnement < stationnements.length && indexPlaceStationnement == -1; indexStationnement++) {
+            if(vehiculeRepare.equals(stationnements[indexStationnement])) {
+                indexPlaceStationnement = indexStationnement;
+            }
         }
 
-        return (placeStationnement);
+        return (indexPlaceStationnement);
     }
 
     /**
@@ -143,10 +145,10 @@ public class Garage {
         int indexStationement = placeStationement-1;
         int indexGarage = placeGarage -1;
 
-        if(stationnements[indexStationement] == null && garages[indexGarage] != null) {
+        if(indexStationement > -1 && indexStationement > -1 && stationnements[indexStationement] == null && garages[indexGarage] != null) {
             stationnements[indexStationement] = garages[indexGarage]; // deplace dans le stationnement
             
-            garages[placeGarage] = null; // libere le garage; 
+            garages[indexGarage] = null; // libere le garage; 
 
             estSortie = true;
         }
@@ -179,8 +181,10 @@ public class Garage {
      * l'état réparé.
      */
     public void repare() {
-        for (Automobile automobile : garages) {
-            automobile.repare();
+        for (int i = 0; i < garages.length; i++) {
+            if(garages[i] != null) {
+                garages[i].repare();
+            }
         }
     }
 }
