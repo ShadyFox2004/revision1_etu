@@ -55,7 +55,7 @@ public class Garage {
      *         stationnement est plein
      */
     private int trouveIndexPlaceLibre() {
-
+        
         return -1;
     }
 
@@ -84,11 +84,22 @@ public class Garage {
      */
     public boolean entreVehiculeGarage(Automobile vehiculeRepare, int placeGarage) {
         int indexGarage = placeGarage - 1;
+        boolean estEntre = false; 
+
         assert vehiculeRepare != null : "null Vehicule";
         assert indexGarage >= 0 : "place négative";
         assert indexGarage < garages.length : "place inexistante";
 
-        return false;
+        int indexStationement = chercheVehiculeStationnement(vehiculeRepare);
+
+        if (indexStationement != -1) {
+            indexStationement = indexStationement - 1;
+
+
+
+        }
+
+        return estEntre;
     }
 
     /**
@@ -105,7 +116,7 @@ public class Garage {
         assert vehiculeRepare != null : "parametre null";
 
         for (int i = 0; i < stationnements.length || placeDeStationementDispo != -1; i++) {
-            placeDeStationementDispo = stationnements[i].equals(vehiculeRepare) ? i : -1;
+            placeDeStationementDispo = stationnements[i].equals(vehiculeRepare) ? i + 1: -1;
         }
 
         return (placeDeStationementDispo);
@@ -122,10 +133,20 @@ public class Garage {
      */
     public boolean sortVehicule(int placeGarage, int placeStationement) {
 
-        stationnements[placeStationement] = garages[placeGarage];
-        garages[placeGarage] = null;
+        boolean estSortie = false;
 
-        return true;
+        int indexStationement = placeStationement-1;
+        int indexGarage = placeGarage -1;
+
+        if(stationnements[indexStationement] == null && garages[indexGarage] != null) {
+            stationnements[indexStationement] = garages[indexGarage]; // deplace dans le stationnement
+            
+            garages[placeGarage] = null; // libere le garage; 
+
+            estSortie = true;
+        }
+
+        return estSortie;
     }
 
     /**
