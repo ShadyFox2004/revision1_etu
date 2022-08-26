@@ -55,7 +55,14 @@ public class Garage {
      *         stationnement est plein
      */
     private int trouveIndexPlaceLibre() {
-        
+        int indexPlaceLibre = -1;
+
+        for (int indexStationnement = 0; indexStationnement < garages.length && indexPlaceLibre == -1; indexStationnement++) {
+            if(stationnements[indexStationnement] == null) {
+                indexPlaceLibre = indexStationnement;
+            } 
+        }
+
         return -1;
     }
 
