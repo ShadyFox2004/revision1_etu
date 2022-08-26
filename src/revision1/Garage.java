@@ -111,15 +111,15 @@ public class Garage {
      */
     private int chercheVehiculeStationnement(Automobile vehiculeRepare) {
 
-        int placeDeStationementDispo = -1;
+        int placeStationnement = -1;
 
         assert vehiculeRepare != null : "parametre null";
 
-        for (int i = 0; i < stationnements.length || placeDeStationementDispo != -1; i++) {
-            placeDeStationementDispo = stationnements[i].equals(vehiculeRepare) ? i + 1: -1;
+        for (int indexStationnement = 0; indexStationnement < stationnements.length && placeStationnement == -1; indexStationnement++) {
+            placeStationnement = stationnements[indexStationnement].equals(vehiculeRepare) ? indexStationnement: -1;
         }
 
-        return (placeDeStationementDispo);
+        return (placeStationnement);
     }
 
     /**
