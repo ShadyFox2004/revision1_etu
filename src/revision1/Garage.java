@@ -1,7 +1,14 @@
 package revision1;
+
+import java.time.LocalDateTime;
+import java.util.Map;
+import java.util.TreeMap;
+
 public class Garage {
     private Automobile[] stationnements;
     private Automobile[] garages;
+
+    private Map History = new TreeMap<LocalDateTime, String>();
 
     /**
      * crée un Garage avec le nombre de place de stationnement demandé et toujours 2
@@ -120,7 +127,8 @@ public class Garage {
 
         assert vehiculeRepare != null : "parametre null";
 
-        for (int indexStationnement = 0; indexStationnement < stationnements.length && indexPlaceStationnement == -1; indexStationnement++) {
+        for (int indexStationnement = 0; indexStationnement < stationnements.length &&
+            indexPlaceStationnement == -1; indexStationnement++) {
             if(vehiculeRepare.equals(stationnements[indexStationnement])) {
                 indexPlaceStationnement = indexStationnement;
             }
