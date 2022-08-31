@@ -1,23 +1,14 @@
 package revision1;
 
-import java.util.Objects;
-
-public class Automobile {
-    public enum Etat {TRES_BRISE, BRISE, REPARE, NEUF}
-
-    private String NIP;
+public class Automobile extends Vehicule{
 
     private Etat etatTransmission = Etat.NEUF;
     private Etat etatCarosserie = Etat.NEUF;
     private Etat etatMoteur = Etat.NEUF;
-
     private Etat etatHabitacle = Etat.NEUF;
 
     public Automobile(String NIP) {
-        this.NIP = NIP;
-    }
-
-    public Automobile() {
+        super(NIP);
     }
 
     public Etat getEtatTransmission() {
@@ -47,7 +38,7 @@ public class Automobile {
     @Override
     public String toString() {
         return "Automobile{" +
-                "NIP='" + NIP + '\'' +
+                "NIP='" + getNIP() + '\'' +
                 ", etatTransmission=" + etatTransmission +
                 ", etatCarosserie=" + etatCarosserie +
                 ", etatMoteur=" + etatMoteur +
@@ -58,21 +49,30 @@ public class Automobile {
      * répare tous les dommages du vehicule en indiquant l'état réparé.
      * Défi: essayez de gérer le cout des réparations.
      */
-    public void repare() {
-        if (getEtatCarosserie() != Automobile.Etat.NEUF && getEtatCarosserie() != Automobile.Etat.REPARE)
-            this.setEtatCarosserie(Automobile.Etat.REPARE);
-        if (getEtatMoteur() != Automobile.Etat.NEUF && getEtatMoteur() != Automobile.Etat.REPARE)
-            setEtatMoteur(Automobile.Etat.REPARE);
-        if (getEtatTransmission() != Automobile.Etat.NEUF && getEtatTransmission() != Automobile.Etat.REPARE)
-            setEtatTransmission(Automobile.Etat.REPARE);
-    }
+    public String repare() {
+        String composanteRepare = "";
+        if (getEtatCarosserie() != Etat.NEUF && getEtatCarosserie() != Etat.REPARE) {
+            this.setEtatCarosserie(Etat.REPARE);
+            composanteRepare += " carosserie";
+        }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Automobile that = (Automobile) o;
-        return Objects.equals(NIP, that.NIP);
-    }
+        if (getEtatMoteur() != Etat.NEUF && getEtatMoteur() != Etat.REPARE) {
+            this.setEtatMoteur(Etat.REPARE);
+            composanteRepare += " moteur";
+        }
+        
+        if (getEtatTransmission() != Etat.NEUF && getEtatTransmission() != Etat.REPARE) {
+            setEtatTransmission(Etat.REPARE);
+            composanteRepare += " transmission";
+        }
 
+        /*
+        if (getEtat() != Etat.NEUF && getEtatTransmission() != Etat.REPARE) {
+            setEtatTransmission(Etat.REPARE);
+            composanteRepare += " habitacle";
+        }
+        */
+
+        return(composanteRepare);
+    }
 }

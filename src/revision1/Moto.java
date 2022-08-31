@@ -1,27 +1,34 @@
 package revision1;
 
-public class Moto {
+public class Moto extends Vehicule {
 
-    public enum Etat {TRES_BRISE, BRISE, REPARE, NEUF}
-
-    private String NIP;
-    private Automobile.Etat etatTransmission = Automobile.Etat.NEUF;
-    private Automobile.Etat etatMoteur = Automobile.Etat.NEUF;
+    
+    private Vehicule.Etat etatTransmission = Vehicule.Etat.NEUF;
+    private Vehicule.Etat etatMoteur = Vehicule.Etat.NEUF;
 
 
     public Moto(String NIP) {
-        this.NIP = NIP;
+        super(NIP);
     }
 
     /**
      * répare tous les dommages du vehicule en indiquant l'état réparé.
      * Défi: essayez de gérer le cout des réparations.
      */
-    public void repare() {
-        if (getEtatMoteur() != Automobile.Etat.NEUF && getEtatMoteur() != Automobile.Etat.REPARE)
-            setEtatMoteur(Automobile.Etat.REPARE);
-        if (getEtatTransmission() != Automobile.Etat.NEUF && getEtatTransmission() != Automobile.Etat.REPARE)
+    public String repare() {
+        String composanteRepare = "";
+        
+        if (getEtatMoteur() != Automobile.Etat.NEUF && getEtatMoteur() != Automobile.Etat.REPARE) {
+            this.setEtatMoteur(Automobile.Etat.REPARE);
+            composanteRepare += " moteur";
+        }
+        
+        if (getEtatTransmission() != Automobile.Etat.NEUF && getEtatTransmission() != Automobile.Etat.REPARE) {
             setEtatTransmission(Automobile.Etat.REPARE);
+            composanteRepare += " transmission";
+        }
+
+        return(composanteRepare);
     }
 
     public Automobile.Etat getEtatTransmission() {
@@ -43,7 +50,7 @@ public class Moto {
     @Override
     public String toString() {
         return "Moto{" +
-                "NIP='" + NIP + '\'' +
+                "NIP='" + getNIP() + '\'' +
                 ", etatTransmission=" + etatTransmission +
                 ", etatMoteur=" + etatMoteur +
                 '}';

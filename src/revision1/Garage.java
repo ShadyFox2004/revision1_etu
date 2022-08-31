@@ -5,10 +5,10 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class Garage {
-    private Automobile[] stationnements;
-    private Automobile[] garages;
+    private Vehicule[] stationnements;
+    private Vehicule[] garages;
 
-    private Map History = new TreeMap<LocalDateTime, String>();
+    private Map<LocalDateTime, String> historiqueDesReparation = new TreeMap<LocalDateTime, String>();
 
     /**
      * crée un Garage avec le nombre de place de stationnement demandé et toujours 2
@@ -18,8 +18,8 @@ public class Garage {
      */
     public Garage(int nombrePlacesStationnement) {
         assert nombrePlacesStationnement > 0 : "valeur négative";
-        garages = new Automobile[2];
-        stationnements = new Automobile[nombrePlacesStationnement];
+        garages = new Vehicule[2];
+        stationnements = new Vehicule[nombrePlacesStationnement];
     }
 
     /**
@@ -30,7 +30,7 @@ public class Garage {
      * @param auto l'auto à placer dans le stationnement
      * @return faux s'il n'y a plus de palce
      */
-    public boolean stationne(Automobile auto) {
+    public boolean stationne(Vehicule auto) {
         boolean estStationne = false;
 
         int indexPlaceLibre = trouveIndexPlaceLibre();
@@ -94,7 +94,7 @@ public class Garage {
      *                       vehicule)
      * @return vrai si le vehicule a pu être entré
      */
-    public boolean entreVehiculeGarage(Automobile vehiculeRepare, int placeGarage) {
+    public boolean entreVehiculeGarage(Vehicule vehiculeRepare, int placeGarage) {
         int indexGarage = placeGarage - 1;
         boolean estEntre = false; 
 
@@ -121,7 +121,7 @@ public class Garage {
      * @param vehiculeRepare le véhicule à trouver (avec méthode equals)
      * @return l'index du vehicule ou -1 s'il n'a pas été trouvé
      */
-    private int chercheVehiculeStationnement(Automobile vehiculeRepare) {
+    private int chercheVehiculeStationnement(Vehicule vehiculeRepare) {
 
         int indexPlaceStationnement = -1;
 
@@ -174,8 +174,8 @@ public class Garage {
      * @param auto le vehicule qui doit être retiré
      * @return le vehicule qui doit être retiré sii il est trouvé null autrement.
      */
-    public Automobile faitDepartVehicule(Automobile auto) {
-        Automobile vehiculeParti = null;
+    public Vehicule faitDepartVehicule(Vehicule auto) {
+        Vehicule vehiculeParti = null;
         
         int indexStationement = chercheVehiculeStationnement(auto);
 
@@ -192,9 +192,13 @@ public class Garage {
      * l'état réparé.
      */
     public void repare() {
+        Vehicule vehicule;
+        String logDesReparation;
         for (int i = 0; i < garages.length; i++) {
-            if(garages[i] != null) {
-                garages[i].repare();
+            vehicule = garages[i];
+            
+            if(vehicule != null) {
+                historiqueDesReparation.put(LocalDateTime.now(), "; " + vehicule.getNIP()+ "-" + vehicule.repare());
             }
         }
     }
