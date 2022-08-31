@@ -1,11 +1,10 @@
 package revision1;
 
 import java.io.IOException;
-import java.util.Iterator;
 
 public class Application {
     public static void main(String[] args) {
-        Garage garage = new Garage(4);
+        Garage garage = new Garage(12);
         Automobile autoA = new Automobile("A");
         Automobile autoB = new Automobile("B");
         Automobile autoC = new Automobile("C");
@@ -30,7 +29,7 @@ public class Application {
         System.out.println(autoD);
         // Réparation des autos A et B
         garage.entreVehiculeGarage(autoA, 1);
-        garage.entreVehiculeGarage(autoB,2);
+        garage.entreVehiculeGarage(autoB, 2);
 
         try {
             garage.enregistreVehicules("garage.txt");
@@ -40,8 +39,8 @@ public class Application {
         }
 
         garage.repare();
-        garage.sortVehicule(1,garage.trouvePlace());
-        garage.sortVehicule(2,garage.trouvePlace());
+        garage.sortVehicule(1, garage.trouvePlace());
+        garage.sortVehicule(2, garage.trouvePlace());
 
         garage.faitDepartVehicule(autoA);
         garage.faitDepartVehicule(autoB);
@@ -53,13 +52,11 @@ public class Application {
 
         // Réparation des autos C et D
         garage.entreVehiculeGarage(autoC, 1);
-        garage.entreVehiculeGarage(autoD,2);
-
-        
+        garage.entreVehiculeGarage(autoD, 2);
 
         garage.repare();
-        garage.sortVehicule(1,garage.trouvePlace());
-        garage.sortVehicule(2,garage.trouvePlace());
+        garage.sortVehicule(1, garage.trouvePlace());
+        garage.sortVehicule(2, garage.trouvePlace());
 
         garage.faitDepartVehicule(autoC);
         garage.faitDepartVehicule(autoD);
@@ -67,10 +64,5 @@ public class Application {
         System.out.println(autoC);
         System.out.println(autoD);
 
-        Iterator i =  garage.getHistory().values().iterator();
-
-        while(i.hasNext()) {
-            System.out.println(i.next().toString());
-        }
     }
 }

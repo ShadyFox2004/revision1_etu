@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.TreeMap;
 
+import javax.swing.text.html.HTMLDocument.Iterator;
+
 public class Garage {
     private Vehicule[] stationnements;
     private Vehicule[] garages;
@@ -22,7 +24,7 @@ public class Garage {
      */
     public Garage(int nombrePlacesStationnement) {
         assert nombrePlacesStationnement > 0 : "valeur négative";
-        garages = new Vehicule[2];
+        garages = new Vehicule[5];
         stationnements = new Vehicule[nombrePlacesStationnement];
         historiqueDesReparation = new TreeMap<LocalDateTime, String>();
     }
@@ -208,10 +210,6 @@ public class Garage {
         }
     }
 
-    public Map getHistory() {
-        return(historiqueDesReparation);
-    }
-
     public void enregistreVehicules(String nomFichier) throws IOException {
         assert nomFichier != null : "Nom de fichier null";
         PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(nomFichier)));
@@ -222,19 +220,19 @@ public class Garage {
         for (int indexStationnement = 0; indexStationnement < stationnements.length; indexStationnement++) {
             vehicule = stationnements[indexStationnement];
 
-            if(vehicule != null) {
+            if (vehicule != null) {
                 out.println(vehicule.toString());
-            }            
+            }
         }
-        
+
         out.println("garages:");
 
         for (int i = 0; i < garages.length; i++) {
             vehicule = garages[i];
 
-            if(vehicule != null) {
+            if (vehicule != null) {
                 out.println(vehicule.toString());
-            }            
+            }
         }
 
         out.close();
