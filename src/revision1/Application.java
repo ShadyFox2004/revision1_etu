@@ -1,5 +1,7 @@
 package revision1;
 
+import java.util.Iterator;
+
 public class Application {
     public static void main(String[] args) {
         Garage garage = new Garage(4);
@@ -7,26 +9,24 @@ public class Application {
         Automobile autoB = new Automobile("B");
         Automobile autoC = new Automobile("C");
         Automobile autoD = new Automobile("D");
+        Moto motoA = new Moto("a");
+
+        autoA.setEtatTransmission(Automobile.Etat.TRES_BRISE);
+        autoA.setEtatMoteur(Automobile.Etat.BRISE);
+        autoB.setEtatTransmission(Automobile.Etat.BRISE);
+        autoC.setEtatCarosserie(Automobile.Etat.TRES_BRISE);
+        autoD.setEtatMoteur(Automobile.Etat.BRISE);
 
         garage.stationne(autoA);
         garage.stationne(autoB);
         garage.stationne(autoC);
         garage.stationne(autoD);
 
-        autoA.setEtatTransmission(Automobile.Etat.TRES_BRISE);
-        autoA.setEtatMoteur(Automobile.Etat.BRISE);
-        autoB.setEtatTransmission(Automobile.Etat.BRISE);
-
-        autoC.setEtatCarosserie(Automobile.Etat.TRES_BRISE);
-        autoD.setEtatMoteur(Automobile.Etat.BRISE);
-
         System.out.println("Les autos sont endommagés");
         System.out.println(autoA);
         System.out.println(autoB);
         System.out.println(autoC);
         System.out.println(autoD);
-
-        System.out.println("\n les autos sont réparées");
         // Réparation des autos A et B
         garage.entreVehiculeGarage(autoA, 1);
         garage.entreVehiculeGarage(autoB,2);
@@ -38,12 +38,16 @@ public class Application {
         garage.faitDepartVehicule(autoA);
         garage.faitDepartVehicule(autoB);
 
+        garage.stationne(motoA);
+
         System.out.println(autoA);
         System.out.println(autoB);
 
         // Réparation des autos C et D
         garage.entreVehiculeGarage(autoC, 1);
         garage.entreVehiculeGarage(autoD,2);
+
+        
 
         garage.repare();
         garage.sortVehicule(1,garage.trouvePlace());
@@ -55,5 +59,10 @@ public class Application {
         System.out.println(autoC);
         System.out.println(autoD);
 
+        Iterator i =  garage.getHistory().values().iterator();
+
+        while(i.hasNext()) {
+            System.out.println(i.next().toString());
+        }
     }
 }

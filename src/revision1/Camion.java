@@ -1,10 +1,6 @@
 package revision1;
 
-public class Camion extends Vehicule{
-
-    private Vehicule.Etat etatTransmission = Vehicule.Etat.NEUF;
-    private Vehicule.Etat etatCarosserie = Vehicule.Etat.NEUF;
-    private Vehicule.Etat etatMoteur = Vehicule.Etat.NEUF;
+public class Camion extends Automobile{
 
     private Vehicule.Etat etatEspaceCargaison = Vehicule.Etat.NEUF;
 
@@ -18,21 +14,7 @@ public class Camion extends Vehicule{
      */
     @Override
     public String repare() {
-        String composanteRepare = "";
-        if (getEtatCarosserie() != Etat.NEUF && getEtatCarosserie() != Etat.REPARE) {
-            this.setEtatCarosserie(Etat.REPARE);
-            composanteRepare += " carosserie";
-        }
-
-        if (getEtatMoteur() != Etat.NEUF && getEtatMoteur() != Etat.REPARE) {
-            this.setEtatMoteur(Etat.REPARE);
-            composanteRepare += " moteur";
-        }
-        
-        if (getEtatTransmission() != Etat.NEUF && getEtatTransmission() != Etat.REPARE) {
-            setEtatTransmission(Etat.REPARE);
-            composanteRepare += " transmission";
-        }
+        String composanteRepare = super.repare();
 
         if (getEtatEspaceCargaison() != Etat.NEUF && getEtatEspaceCargaison() != Etat.REPARE) {
             setEtatEspaceCargaison(Etat.REPARE);
@@ -40,30 +22,6 @@ public class Camion extends Vehicule{
         }
         
         return(composanteRepare);
-    }
-
-    public Vehicule.Etat getEtatTransmission() {
-        return etatTransmission;
-    }
-
-    public void setEtatTransmission(Vehicule.Etat etatTransmission) {
-        this.etatTransmission = etatTransmission;
-    }
-
-    public Vehicule.Etat getEtatCarosserie() {
-        return etatCarosserie;
-    }
-
-    public void setEtatCarosserie(Vehicule.Etat etatCarosserie) {
-        this.etatCarosserie = etatCarosserie;
-    }
-
-    public Vehicule.Etat getEtatMoteur() {
-        return etatMoteur;
-    }
-
-    public void setEtatMoteur(Vehicule.Etat etatMoteur) {
-        this.etatMoteur = etatMoteur;
     }
 
     public Vehicule.Etat getEtatEspaceCargaison() {
@@ -78,10 +36,10 @@ public class Camion extends Vehicule{
     public String toString() {
         return "Camion{" +
                 "NIP='" + getNIP() + '\'' +
-                ", etatTransmission=" + etatTransmission +
-                ", etatCarosserie=" + etatCarosserie +
-                ", etatMoteur=" + etatMoteur +
-                ", etatEspaceCargaison=" + etatEspaceCargaison +
+                ", etatTransmission=" + getEtatTransmission() +
+                ", etatCarosserie=" + getEtatCarosserie() +
+                ", etatMoteur=" + getEtatMoteur() +
+                ", etatEspaceCargaison=" + getEtatEspaceCargaison() +
                 '}';
     }
 }

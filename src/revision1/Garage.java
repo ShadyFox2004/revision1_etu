@@ -8,7 +8,7 @@ public class Garage {
     private Vehicule[] stationnements;
     private Vehicule[] garages;
 
-    private Map<LocalDateTime, String> historiqueDesReparation = new TreeMap<LocalDateTime, String>();
+    private Map<LocalDateTime, String> historiqueDesReparation;
 
     /**
      * crée un Garage avec le nombre de place de stationnement demandé et toujours 2
@@ -20,6 +20,7 @@ public class Garage {
         assert nombrePlacesStationnement > 0 : "valeur négative";
         garages = new Vehicule[2];
         stationnements = new Vehicule[nombrePlacesStationnement];
+        historiqueDesReparation = new TreeMap<LocalDateTime, String>();
     }
 
     /**
@@ -35,7 +36,7 @@ public class Garage {
 
         int indexPlaceLibre = trouveIndexPlaceLibre();
 
-        if(indexPlaceLibre != -1) {
+        if (indexPlaceLibre != -1) {
             stationnements[indexPlaceLibre] = auto;
             estStationne = true;
         }
@@ -62,10 +63,11 @@ public class Garage {
     private int trouveIndexPlaceLibre() {
         int indexPlaceLibre = -1;
 
-        for (int indexStationnement = 0; indexStationnement < stationnements.length && indexPlaceLibre == -1; indexStationnement++) {
-            if(stationnements[indexStationnement] == null) {
+        for (int indexStationnement = 0; indexStationnement < stationnements.length
+                && indexPlaceLibre == -1; indexStationnement++) {
+            if (stationnements[indexStationnement] == null) {
                 indexPlaceLibre = indexStationnement;
-            } 
+            }
         }
 
         return indexPlaceLibre;
@@ -96,7 +98,7 @@ public class Garage {
      */
     public boolean entreVehiculeGarage(Vehicule vehiculeRepare, int placeGarage) {
         int indexGarage = placeGarage - 1;
-        boolean estEntre = false; 
+        boolean estEntre = false;
 
         assert vehiculeRepare != null : "null Vehicule";
         assert indexGarage >= 0 : "place négative";
@@ -108,7 +110,7 @@ public class Garage {
             garages[indexGarage] = stationnements[indexStationement];
             stationnements[indexStationement] = null; // libere le stationnement
 
-            estEntre = true; 
+            estEntre = true;
         }
 
         return estEntre;
@@ -128,8 +130,8 @@ public class Garage {
         assert vehiculeRepare != null : "parametre null";
 
         for (int indexStationnement = 0; indexStationnement < stationnements.length &&
-            indexPlaceStationnement == -1; indexStationnement++) {
-            if(vehiculeRepare.equals(stationnements[indexStationnement])) {
+                indexPlaceStationnement == -1; indexStationnement++) {
+            if (vehiculeRepare.equals(stationnements[indexStationnement])) {
                 indexPlaceStationnement = indexStationnement;
             }
         }
@@ -153,13 +155,13 @@ public class Garage {
         assert placeGarage > 0 : "place negative";
         assert placeStationement > 0 : "place negative";
 
-        int indexStationement = placeStationement-1;
-        int indexGarage = placeGarage -1;
+        int indexStationement = placeStationement - 1;
+        int indexGarage = placeGarage - 1;
 
-        if(stationnements[indexStationement] == null && garages[indexGarage] != null) {
+        if (stationnements[indexStationement] == null && garages[indexGarage] != null) {
             stationnements[indexStationement] = garages[indexGarage]; // deplace dans le stationnement
-            
-            garages[indexGarage] = null; // libere le garage; 
+
+            garages[indexGarage] = null; // libere le garage;
 
             estSortie = true;
         }
@@ -176,10 +178,10 @@ public class Garage {
      */
     public Vehicule faitDepartVehicule(Vehicule auto) {
         Vehicule vehiculeParti = null;
-        
+
         int indexStationement = chercheVehiculeStationnement(auto);
 
-        if(indexStationement != -1) {
+        if (indexStationement != -1) {
             vehiculeParti = stationnements[indexStationement];
             stationnements[indexStationement] = null;
         }
@@ -193,13 +195,16 @@ public class Garage {
      */
     public void repare() {
         Vehicule vehicule;
-        String logDesReparation;
         for (int i = 0; i < garages.length; i++) {
             vehicule = garages[i];
-            
-            if(vehicule != null) {
-                historiqueDesReparation.put(LocalDateTime.now(), "; " + vehicule.getNIP()+ "-" + vehicule.repare());
+
+            if (vehicule != null) {
+                historiqueDesReparation.put(LocalDateTime.now(), "; " + vehicule.getNIP() + "-" + vehicule.repare());
             }
         }
+    }
+
+    public Map getHistory() {
+        return(historiqueDesReparation);
     }
 }
