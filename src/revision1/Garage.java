@@ -215,20 +215,25 @@ public class Garage {
     public void enregistreVehicules(String nomFichier) throws IOException {
         assert nomFichier != null : "Nom de fichier null";
         PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(nomFichier)));
+        Vehicule vehicule;
 
-        out.println("garages");
+        out.println("stationnements:");
 
-        for (int i = 0; i < garages.length; i++) {
-            if(garages[i] != null) {
-                out.println(garages[i].toString());
+        for (int indexStationnement = 0; indexStationnement < stationnements.length; indexStationnement++) {
+            vehicule = stationnements[indexStationnement];
+
+            if(vehicule != null) {
+                out.println(vehicule.toString());
             }            
         }
+        
+        out.println("garages:");
 
-        out.println("stationnements");
+        for (int i = 0; i < garages.length; i++) {
+            vehicule = garages[i];
 
-        for (int i = 0; i < stationnements.length; i++) {
-            if(stationnements[i] != null) {
-                out.println(stationnements[i].toString());
+            if(vehicule != null) {
+                out.println(vehicule.toString());
             }            
         }
 
