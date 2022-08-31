@@ -1,5 +1,11 @@
 package revision1;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.Buffer;
+
 public class Automobile extends VehiculeMotorise {
     private Etat etatCarosserie = Etat.NEUF;
     private Etat etatHabitacle = Etat.NEUF;

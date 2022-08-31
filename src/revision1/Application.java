@@ -1,5 +1,6 @@
 package revision1;
 
+import java.io.IOException;
 import java.util.Iterator;
 
 public class Application {
@@ -30,6 +31,13 @@ public class Application {
         // Réparation des autos A et B
         garage.entreVehiculeGarage(autoA, 1);
         garage.entreVehiculeGarage(autoB,2);
+
+        try {
+            garage.enregistreVehicules("garage.txt");
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
         garage.repare();
         garage.sortVehicule(1,garage.trouvePlace());
