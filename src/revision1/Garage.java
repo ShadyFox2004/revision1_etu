@@ -1,5 +1,9 @@
 package revision1;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.TreeMap;
@@ -206,5 +210,33 @@ public class Garage {
 
     public Map getHistory() {
         return(historiqueDesReparation);
+    }
+
+    public void enregistreVehicules(String nomFichier) throws IOException {
+        assert nomFichier != null : "Nom de fichier null";
+        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(nomFichier)));
+        Vehicule vehicule;
+
+        out.println("stationnements:");
+
+        for (int indexStationnement = 0; indexStationnement < stationnements.length; indexStationnement++) {
+            vehicule = stationnements[indexStationnement];
+
+            if(vehicule != null) {
+                out.println(vehicule.toString());
+            }            
+        }
+        
+        out.println("garages:");
+
+        for (int i = 0; i < garages.length; i++) {
+            vehicule = garages[i];
+
+            if(vehicule != null) {
+                out.println(vehicule.toString());
+            }            
+        }
+
+        out.close();
     }
 }
