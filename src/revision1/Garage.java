@@ -1,7 +1,14 @@
 package revision1;
+
+import java.time.LocalDateTime;
+import java.util.Map;
+import java.util.TreeMap;
+
 public class Garage {
-    private Automobile[] stationnements;
-    private Automobile[] garages;
+    private Vehicule[] stationnements;
+    private Vehicule[] garages;
+
+    private Map<LocalDateTime, String> historiqueDesReparation;
 
     /**
      * crée un Garage avec le nombre de place de stationnement demandé et toujours 2
@@ -11,8 +18,9 @@ public class Garage {
      */
     public Garage(int nombrePlacesStationnement) {
         assert nombrePlacesStationnement > 0 : "valeur négative";
-        garages = new Automobile[2];
-        stationnements = new Automobile[nombrePlacesStationnement];
+        garages = new Vehicule[2];
+        stationnements = new Vehicule[nombrePlacesStationnement];
+        historiqueDesReparation = new TreeMap<LocalDateTime, String>();
     }
 
     /**
@@ -23,12 +31,12 @@ public class Garage {
      * @param auto l'auto à placer dans le stationnement
      * @return faux s'il n'y a plus de palce
      */
-    public boolean stationne(Automobile auto) {
+    public boolean stationne(Vehicule auto) {
         boolean estStationne = false;
 
         int indexPlaceLibre = trouveIndexPlaceLibre();
 
-        if(indexPlaceLibre != -1) {
+        if (indexPlaceLibre != -1) {
             stationnements[indexPlaceLibre] = auto;
             estStationne = true;
         }
@@ -55,10 +63,11 @@ public class Garage {
     private int trouveIndexPlaceLibre() {
         int indexPlaceLibre = -1;
 
-        for (int indexStationnement = 0; indexStationnement < stationnements.length && indexPlaceLibre == -1; indexStationnement++) {
-            if(stationnements[indexStationnement] == null) {
+        for (int indexStationnement = 0; indexStationnement < stationnements.length
+                && indexPlaceLibre == -1; indexStationnement++) {
+            if (stationnements[indexStationnement] == null) {
                 indexPlaceLibre = indexStationnement;
-            } 
+            }
         }
 
         return indexPlaceLibre;
@@ -87,9 +96,9 @@ public class Garage {
      *                       vehicule)
      * @return vrai si le vehicule a pu être entré
      */
-    public boolean entreVehiculeGarage(Automobile vehiculeRepare, int placeGarage) {
+    public boolean entreVehiculeGarage(Vehicule vehiculeRepare, int placeGarage) {
         int indexGarage = placeGarage - 1;
-        boolean estEntre = false; 
+        boolean estEntre = false;
 
         assert vehiculeRepare != null : "null Vehicule";
         assert indexGarage >= 0 : "place négative";
@@ -101,7 +110,7 @@ public class Garage {
             garages[indexGarage] = stationnements[indexStationement];
             stationnements[indexStationement] = null; // libere le stationnement
 
-            estEntre = true; 
+            estEntre = true;
         }
 
         return estEntre;
@@ -114,15 +123,15 @@ public class Garage {
      * @param vehiculeRepare le véhicule à trouver (avec méthode equals)
      * @return l'index du vehicule ou -1 s'il n'a pas été trouvé
      */
-    private int chercheVehiculeStationnement(Automobile vehiculeRepare) {
+    private int chercheVehiculeStationnement(Vehicule vehiculeRepare) {
 
         int indexPlaceStationnement = -1;
 
         assert vehiculeRepare != null : "parametre null";
 
         for (int indexStationnement = 0; indexStationnement < stationnements.length &&
-            indexPlaceStationnement == -1; indexStationnement++) {
-            if(vehiculeRepare.equals(stationnements[indexStationnement])) {
+                indexPlaceStationnement == -1; indexStationnement++) {
+            if (vehiculeRepare.equals(stationnements[indexStationnement])) {
                 indexPlaceStationnement = indexStationnement;
             }
         }
@@ -146,13 +155,13 @@ public class Garage {
         assert placeGarage > 0 : "place negative";
         assert placeStationement > 0 : "place negative";
 
-        int indexStationement = placeStationement-1;
-        int indexGarage = placeGarage -1;
+        int indexStationement = placeStationement - 1;
+        int indexGarage = placeGarage - 1;
 
-        if(stationnements[indexStationement] == null && garages[indexGarage] != null) {
+        if (stationnements[indexStationement] == null && garages[indexGarage] != null) {
             stationnements[indexStationement] = garages[indexGarage]; // deplace dans le stationnement
-            
-            garages[indexGarage] = null; // libere le garage; 
+
+            garages[indexGarage] = null; // libere le garage;
 
             estSortie = true;
         }
@@ -167,12 +176,12 @@ public class Garage {
      * @param auto le vehicule qui doit être retiré
      * @return le vehicule qui doit être retiré sii il est trouvé null autrement.
      */
-    public Automobile faitDepartVehicule(Automobile auto) {
-        Automobile vehiculeParti = null;
-        
+    public Vehicule faitDepartVehicule(Vehicule auto) {
+        Vehicule vehiculeParti = null;
+
         int indexStationement = chercheVehiculeStationnement(auto);
 
-        if(indexStationement != -1) {
+        if (indexStationement != -1) {
             vehiculeParti = stationnements[indexStationement];
             stationnements[indexStationement] = null;
         }
@@ -185,10 +194,17 @@ public class Garage {
      * l'état réparé.
      */
     public void repare() {
+        Vehicule vehicule;
         for (int i = 0; i < garages.length; i++) {
-            if(garages[i] != null) {
-                garages[i].repare();
+            vehicule = garages[i];
+
+            if (vehicule != null) {
+                historiqueDesReparation.put(LocalDateTime.now(), "; " + vehicule.getNIP() + "-" + vehicule.repare());
             }
         }
+    }
+
+    public Map getHistory() {
+        return(historiqueDesReparation);
     }
 }
